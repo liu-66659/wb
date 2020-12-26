@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hrm.teacher.dao.ITeacherDao">
+    <select id="selectCourses" resultType="Course">
+        select * from course
+    </select>
+<select id="selectCourseScore" resultType="CourseScore">
+    select * from score
+</select>
+
+
+    <select id="selectByClass" resultType="Class">
+        select * from class
+    </select>
+
+    <select id="findStudentScore" resultType="StudentScore">
+
+SELECT student.sid, student.sname ,student.sex ,student.sclass,score.scorecname,score.scoreu ,score.scoret,score.scoregrade
+
+ FROM student ,score WHERE student.sid=score.scoreid
+    </select>
+
+    <select id="selectStudentScoreBy" resultType="StudentScore">
+SELECT student.sid, student.sname ,student.sex ,student.sclass,score.scorecname,score.scoreu ,score.scoret,score.scoregrade
+
+ FROM student ,score
+
+        <where>
+            <if test="sid!=null and sid!='' ">
+                sid like '%' #{sid} '%'
+
+            </if>
+            <if test="sname!=null and sname!=''">
+                and sname like '%' #{sname} '%'
+            </if>
+	      <if test="1==1">
+             and  1=1
+          </if>
+        </where>
+and  student.sid=score.scoreid
+
+    </select>
+
+
+    <select id="selectclassscore" resultType="ClassScore">
+
+
+
+ SELECT   class.classid ,student.sclass  ,score.scoreu,score.scoret,score.scoregrade
+ FROM student ,class ,score WHERE student.sid=score.scoreid   AND class.classclass=student.sclass  and sclass=#{ccn}
+
+    </select>
+
+    <select id="selectfindstudentmessage" resultType="StudentMessage">
+
+
+select
+        student.sid,student.sname,student.sex,
+        student.school,student.sclass,student.phone ,
+        score.scorecname,score.scoreu,score.scoret,scoregrade
+        from student,score
+ <where>
+     <if test ="scorecname!=null and scorecname!='' ">
+         scorecname like '%' #{scorecname} '%'
+     </if>
+     <if test="1==1">
+         and  1=1
+     </if>
+
+ </where>
+
+and  student.sid=score.scoreid
+</select>
+</mapper>
